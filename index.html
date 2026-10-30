@@ -47,6 +47,7 @@ try { var k0 = localStorage.getItem("bibliotheque-look"); if (k0) document.docum
   --card-livre: var(--card-bg);
   --card-video: var(--card-bg);
   --card-podcast: var(--card-bg);
+  --card-film: var(--card-bg);
   --hero-bg: linear-gradient(135deg, #4a3fb0 0%, #8b52d8 100%);
   --hero-fg: #ffffff;
   --hero-btn-bg: #ffffff;
@@ -64,22 +65,25 @@ try { var k0 = localStorage.getItem("bibliotheque-look"); if (k0) document.docum
   --ico-livre: var(--ico-bg);
   --ico-video: var(--ico-bg);
   --ico-podcast: var(--ico-bg);
+  --ico-film: var(--ico-bg);
   --icf-serie: var(--ico-fg);
   --icf-livre: var(--ico-fg);
   --icf-video: var(--ico-fg);
   --icf-podcast: var(--ico-fg);
+  --icf-film: var(--ico-fg);
   --bar-serie: var(--accent);
   --bar-livre: var(--accent);
   --bar-video: var(--accent);
   --bar-podcast: var(--accent);
+  --bar-film: var(--accent);
   --tile-total: var(--card-bg);
   --tile-doing: var(--card-bg);
   --tile-done: var(--card-bg);
   --tile-avg: var(--card-bg);
 }
 :root:not([data-look]), :root[data-look="violet"] {
-  --ico-serie: #dfe6ff; --ico-livre: #ffe0ec; --ico-video: #ffe9d2; --ico-podcast: #e6dcff;
-  --icf-serie: #3b5bdb; --icf-livre: #c2255c; --icf-video: #b85e08; --icf-podcast: #6a4df0;
+  --ico-serie: #dfe6ff; --ico-livre: #ffe0ec; --ico-video: #ffe9d2; --ico-podcast: #e6dcff; --ico-film: #d4f1e3;
+  --icf-serie: #3b5bdb; --icf-livre: #c2255c; --icf-video: #b85e08; --icf-podcast: #6a4df0; --icf-film: #1b7a4a;
 }
 :root[data-look="argile"] {
   --page-bg: #fbf2e6;
@@ -108,14 +112,15 @@ try { var k0 = localStorage.getItem("bibliotheque-look"); if (k0) document.docum
   --card-livre: #f9ddd3;
   --card-video: #fbefc4;
   --card-podcast: #dde6f4;
+  --card-film: #e8dff2;
   --hero-bg: #dcebe3;
   --hero-fg: #2b3b34;
   --hero-btn-bg: #c8553c;
   --hero-btn-fg: #ffffff;
   --ico-radius: 50%;
-  --ico-serie: #bfe0d1; --ico-livre: #f6c4b4; --ico-video: #f6df93; --ico-podcast: #c3d4ee;
-  --icf-serie: #2f6e55; --icf-livre: #a8432a; --icf-video: #7d5f00; --icf-podcast: #3a5f93;
-  --bar-serie: #8fc4ab; --bar-livre: #f0a58f; --bar-video: #efc45a; --bar-podcast: #9db9e0;
+  --ico-serie: #bfe0d1; --ico-livre: #f6c4b4; --ico-video: #f6df93; --ico-podcast: #c3d4ee; --ico-film: #d9c9ec;
+  --icf-serie: #2f6e55; --icf-livre: #a8432a; --icf-video: #7d5f00; --icf-podcast: #3a5f93; --icf-film: #5b3f8c;
+  --bar-serie: #8fc4ab; --bar-livre: #f0a58f; --bar-video: #efc45a; --bar-podcast: #9db9e0; --bar-film: #bba6dc;
   --tile-total: #dcebe3; --tile-doing: #dde6f4; --tile-done: #f9ddd3; --tile-avg: #fbefc4;
 }
 :root[data-look="foret"] {
@@ -279,16 +284,17 @@ svg { display: block; }
 .search input[type=text]:focus-visible { outline: none; }
 
 /* Types : tuiles avec icône */
-.catgrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.catgrid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
 .cat { cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 12px 4px; color: var(--fg); }
 .cat[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--accent), var(--card-shadow); }
-.cat .ci { width: 44px; height: 44px; border-radius: var(--ico-radius); display: grid; place-items: center; }
+.cat .ci { width: 42px; height: 42px; border-radius: var(--ico-radius); display: grid; place-items: center; }
 .cat .ci svg { width: 24px; height: 24px; }
-.cat .cl { font-size: 0.78rem; font-weight: 600; }
+.cat .cl { font-size: 0.72rem; font-weight: 600; }
 .k-serie { background: var(--ico-serie); color: var(--icf-serie); }
 .k-livre { background: var(--ico-livre); color: var(--icf-livre); }
 .k-video { background: var(--ico-video); color: var(--icf-video); }
 .k-podcast { background: var(--ico-podcast); color: var(--icf-podcast); }
+.k-film { background: var(--ico-film); color: var(--icf-film); }
 
 /* En ce moment */
 #featured {
@@ -335,6 +341,7 @@ svg { display: block; }
 .item.t-livre { background: var(--card-livre); }
 .item.t-video { background: var(--card-video); }
 .item.t-podcast { background: var(--card-podcast); }
+.item.t-film { background: var(--card-film); }
 .item .ico { width: 46px; height: 46px; border-radius: var(--ico-radius); display: grid; place-items: center; }
 .item .ico svg { width: 24px; height: 24px; }
 .item .body { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
@@ -449,6 +456,30 @@ svg { display: block; }
 :root[data-look="sable"] .item .title { font-weight: 500; }
 :root[data-look="sable"] #featured .ft { font-weight: 500; font-size: 1.9rem; }
 
+/* Couvertures et épisodes */
+.cover { width: 64px; height: 92px; object-fit: cover; border-radius: 10px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); background: var(--input-bg); display: block; }
+.item.has-cover { grid-template-columns: 64px minmax(0, 1fr); }
+:root[data-look="sable"] .item.has-cover { grid-template-columns: 64px minmax(0, 1fr); }
+.coverrow { display: flex; gap: 14px; align-items: center; }
+.coverprev { width: 64px; height: 92px; flex: none; border-radius: 10px; border: 1px dashed var(--line); background: var(--input-bg) center / cover no-repeat; display: grid; place-items: center; color: var(--muted); }
+.coverprev svg { width: 26px; height: 26px; }
+.coverbtns { display: flex; flex-direction: column; gap: 8px; align-items: flex-start; min-width: 0; }
+.results { display: flex; gap: 8px; overflow-x: auto; padding: 6px 2px; }
+.results:empty { display: none; }
+.results button { flex: none; border: 2px solid transparent; background: none; padding: 0; border-radius: 10px; cursor: pointer; }
+.results button:hover { border-color: var(--accent); }
+.results img { width: 64px; height: 92px; object-fit: cover; border-radius: 8px; display: block; background: var(--input-bg); }
+.seasons { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.steps { display: flex; flex-wrap: wrap; gap: 10px; margin: 2px 0; }
+.stepper { display: inline-flex; align-items: center; gap: 6px; background: var(--input-bg); border: 1px solid var(--line); border-radius: var(--radius-ctl); padding: 3px 4px 3px 14px; }
+.stepper .sl { font-size: 0.85rem; font-weight: 700; }
+.stepper button { width: 30px; height: 30px; border-radius: 50%; border: 0; cursor: pointer; background: var(--accent); color: var(--accent-fg); font-weight: 800; font-size: 1.05rem; line-height: 1; }
+.stepper button.dec { background: transparent; color: var(--fg); border: 1px solid var(--line); }
+#featured.hascov { position: relative; padding-right: 108px; }
+.fcover { position: absolute; right: 16px; top: 16px; width: 74px; height: 106px; object-fit: cover; border-radius: 10px; box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25); }
+
+.coveredit { border-top: 1px solid var(--line); margin-top: 6px; padding-top: 12px; display: flex; flex-direction: column; gap: 8px; }
+.coveredit .btns { display: flex; gap: 8px; flex-wrap: wrap; }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
 </style>
 </head>
@@ -458,7 +489,7 @@ svg { display: block; }
   <header>
     <p class="greet" id="greet">Bonjour, Sumy</p>
     <h1>Ma Bibliothèque</h1>
-    <p class="sub">Séries, livres, vidéos et podcasts, avec ma note et mon avis.</p>
+    <p class="sub">Séries, films, livres, vidéos et podcasts, avec ma note et mon avis.</p>
   </header>
 
   <div class="look">
@@ -478,6 +509,7 @@ svg { display: block; }
         <label for="type">Type</label>
         <select id="type">
           <option value="serie">Série</option>
+          <option value="film">Film</option>
           <option value="livre">Livre</option>
           <option value="video">Vidéo</option>
           <option value="podcast">Podcast</option>
@@ -492,11 +524,35 @@ svg { display: block; }
         <input type="text" id="author" autocomplete="off">
       </div>
       <div>
+        <span class="lbl">Couverture (facultatif)</span>
+        <div class="coverrow">
+          <div class="coverprev" id="cover-prev" aria-hidden="true"></div>
+          <div class="coverbtns">
+            <button class="btn small ghost" type="button" id="cover-pick">Choisir une photo</button>
+            <button class="btn small ghost" type="button" id="cover-search">Chercher la couverture</button>
+            <button class="btn small ghost" type="button" id="cover-clear" hidden>Retirer</button>
+          </div>
+        </div>
+        <input type="file" id="cover-file" accept="image/*" hidden>
+        <div class="results" id="cover-results"></div>
+        <p class="note" id="cover-msg" role="status"></p>
+      </div>
+      <div>
         <label for="status">Statut</label>
         <select id="status">
           <option value="encours">En cours</option>
           <option value="termine">Terminé</option>
         </select>
+      </div>
+      <div id="season-wrap" class="seasons" hidden>
+        <div>
+          <label for="season">Saison</label>
+          <input type="text" inputmode="numeric" id="season" value="1" autocomplete="off">
+        </div>
+        <div>
+          <label for="episode">Épisode</label>
+          <input type="text" inputmode="numeric" id="episode" value="1" autocomplete="off">
+        </div>
       </div>
       <div id="done-fields" hidden>
         <div>
@@ -548,7 +604,7 @@ svg { display: block; }
   <section id="listsec" aria-labelledby="list-title">
     <h2 id="list-title">Mes contenus</h2>
     <ul class="list" id="list"></ul>
-    <p class="note" id="storage-note" hidden>Ton téléphone refuse d'enregistrer ici (mode privé ?). Tes ajouts disparaîtront quand tu fermeras la page.</p>
+    <p class="note" id="storage-note" hidden>Impossible d'enregistrer (mémoire pleine ou navigation privée ?). Tes derniers ajouts risquent de disparaître.</p>
   </section>
 </div>
 
@@ -563,8 +619,8 @@ svg { display: block; }
 
 <script>
 (function () {
-  var TYPES = { serie: "Série", livre: "Livre", video: "Vidéo", podcast: "Podcast" };
-  var TYPES_PL = { serie: "Séries", livre: "Livres", video: "Vidéos", podcast: "Podcasts" };
+  var TYPES = { serie: "Série", film: "Film", livre: "Livre", video: "Vidéo", podcast: "Podcast" };
+  var TYPES_PL = { serie: "Séries", film: "Films", livre: "Livres", video: "Vidéos", podcast: "Podcasts" };
   var STATUSES = { encours: "En cours", termine: "Terminé" };
   var LOOKS = [["argile", "Argile"], ["violet", "Violet verre"], ["foret", "Forêt"], ["sable", "Sable"]];
   var NAME = "Sumy";
@@ -574,6 +630,7 @@ svg { display: block; }
   }
   var ICONS = {
     serie: svg('<rect x="3" y="5" width="18" height="12" rx="2"/><path d="M8 21h8M12 17v4"/>'),
+    film: svg('<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 4v16M17 4v16M3 9h4M3 15h4M17 9h4M17 15h4"/>'),
     livre: svg('<path d="M5 4h12a2 2 0 0 1 2 2v14H7a2 2 0 0 1-2-2z"/><path d="M5 18a2 2 0 0 1 2-2h12"/>'),
     video: svg('<rect x="3" y="5" width="18" height="14" rx="4"/><path d="M10 9.5v5l4.5-2.5z" fill="currentColor"/>'),
     podcast: svg('<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/>'),
@@ -593,6 +650,7 @@ svg { display: block; }
   var col = null;
   var confirmId = null;
   var finishId = null;
+  var coverEditId = null;
   var finRating = 0;
   var finReview = "";
   var finErr = "";
@@ -712,9 +770,17 @@ svg { display: block; }
     f.textContent = "";
     var cur = currentItem();
     f.appendChild(el("span", "kick", "En ce moment"));
+    f.classList.toggle("hascov", !!(cur && cur.cover));
+    if (cur && cur.cover) {
+      var fc = document.createElement("img");
+      fc.className = "fcover";
+      fc.src = cur.cover;
+      fc.alt = "";
+      f.appendChild(fc);
+    }
     if (cur) {
       f.appendChild(el("div", "ft", cur.title));
-      f.appendChild(el("p", "fm", (TYPES[cur.type] || "") + (cur.author ? " · de " + cur.author : "")));
+      f.appendChild(el("p", "fm", (TYPES[cur.type] || "") + (cur.author ? " · de " + cur.author : "") + (cur.type === "serie" ? " · Saison " + (cur.season || 1) + ", épisode " + (cur.episode || 1) : "")));
       var b = el("button", "fbtn", "J'ai terminé");
       b.type = "button";
       b.addEventListener("click", function () {
@@ -756,7 +822,8 @@ svg { display: block; }
     var counts = {};
     Object.keys(TYPES).forEach(function (k) { counts[k] = 0; });
     items.forEach(function (it) { if (counts[it.type] !== undefined) counts[it.type]++; });
-    var max = Math.max(1, counts.serie, counts.livre, counts.video, counts.podcast);
+    var max = 1;
+    Object.keys(TYPES).forEach(function (k) { if (counts[k] > max) max = counts[k]; });
     var bars = $("bars");
     bars.textContent = "";
     Object.keys(TYPES).forEach(function (k) {
@@ -775,6 +842,125 @@ svg { display: block; }
   function dateLabel(ts) {
     try { return new Date(ts).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" }); }
     catch (e) { return ""; }
+  }
+
+  // --- Changer la photo d'un contenu déjà ajouté
+  function saveCover(id, url) {
+    if (!col) return;
+    col.doc(id).update({ cover: url || "" }).then(function () { coverEditId = null; renderAll(); });
+  }
+  function makeCoverEditor(it) {
+    var box = el("div", "coveredit");
+    var msg = el("p", "note", "");
+    msg.setAttribute("role", "status");
+    var results = el("div", "results");
+    var btns = el("div", "btns");
+
+    var file = document.createElement("input");
+    file.type = "file";
+    file.accept = "image/*";
+    file.hidden = true;
+    file.addEventListener("change", function () {
+      var f = file.files && file.files[0];
+      if (!f) return;
+      var url = URL.createObjectURL(f);
+      loadImage(url, false)
+        .then(function (im) { saveCover(it.id, resizeToDataUrl(im)); })
+        .catch(function () { msg.textContent = "Cette photo ne peut pas être lue. Essaie-en une autre."; })
+        .then(function () { URL.revokeObjectURL(url); file.value = ""; });
+    });
+
+    var pick = el("button", "btn small", "Choisir une photo");
+    pick.type = "button";
+    pick.addEventListener("click", function () { file.click(); });
+    btns.appendChild(pick);
+
+    if (it.type !== "video") {
+      var find = el("button", "btn small ghost", "Chercher la couverture");
+      find.type = "button";
+      find.addEventListener("click", function () {
+        msg.textContent = "Recherche en cours…";
+        results.textContent = "";
+        searchCovers(it.type, it.title).then(function (list) {
+          var seen = {};
+          list = list.filter(function (r) { if (seen[r.url]) return false; seen[r.url] = 1; return true; });
+          if (!list.length) { msg.textContent = "Aucune image trouvée. Tu peux choisir une photo de ton téléphone."; return; }
+          msg.textContent = "Touche l'image qui te plaît.";
+          list.forEach(function (r) {
+            var b = document.createElement("button");
+            b.type = "button";
+            b.title = r.label;
+            var im = document.createElement("img");
+            im.src = r.url;
+            im.alt = r.label;
+            b.appendChild(im);
+            b.addEventListener("click", function () {
+              msg.textContent = "Je récupère l'image…";
+              results.textContent = "";
+              loadImage(r.url, true)
+                .then(function (img) { saveCover(it.id, resizeToDataUrl(img)); })
+                .catch(function () { saveCover(it.id, r.url); });
+            });
+            results.appendChild(b);
+          });
+        }).catch(function () {
+          msg.textContent = "Impossible de chercher pour le moment (pas de connexion ?). Tu peux choisir une photo de ton téléphone.";
+        });
+      });
+      btns.appendChild(find);
+    }
+
+    if (it.cover) {
+      var rm = el("button", "btn small ghost", "Retirer la photo");
+      rm.type = "button";
+      rm.addEventListener("click", function () { saveCover(it.id, ""); });
+      btns.appendChild(rm);
+    }
+    var close = el("button", "btn small ghost", "Fermer");
+    close.type = "button";
+    close.addEventListener("click", function () { coverEditId = null; drawList(); });
+    btns.appendChild(close);
+
+    box.appendChild(btns);
+    box.appendChild(file);
+    box.appendChild(results);
+    box.appendChild(msg);
+    return box;
+  }
+
+  // --- Saison et épisode
+  function stepper(text, labelMinus, labelPlus, onStep) {
+    var s = el("span", "stepper");
+    s.appendChild(el("span", "sl", text));
+    var m = el("button", "dec", "−");
+    m.type = "button";
+    m.setAttribute("aria-label", labelMinus);
+    m.addEventListener("click", function () { onStep(-1); });
+    var p = el("button", "inc", "+");
+    p.type = "button";
+    p.setAttribute("aria-label", labelPlus);
+    p.addEventListener("click", function () { onStep(1); });
+    s.appendChild(m);
+    s.appendChild(p);
+    return s;
+  }
+  function setProgress(id, patch) {
+    if (col) col.doc(id).update(patch).then(renderAll);
+  }
+  function makeSteps(it) {
+    var season = it.season || 1, ep = it.episode || 1;
+    var wrap = el("div", "steps");
+    wrap.appendChild(stepper("Saison " + season, "Saison précédente", "Saison suivante", function (d) {
+      var n = Math.max(1, season + d);
+      if (n === season) return;
+      setProgress(it.id, d > 0 ? { season: n, episode: 1 } : { season: n });
+    }));
+    wrap.appendChild(stepper("Épisode " + ep, "Épisode précédent", "Épisode suivant", function (d) {
+      var n = Math.max(1, ep + d);
+      if (n === ep) return;
+      setProgress(it.id, { episode: n });
+    }));
+    return wrap;
   }
 
   function drawList() {
@@ -806,9 +992,18 @@ svg { display: block; }
 
     shown.forEach(function (it) {
       var st = statusOf(it);
-      var li = el("li", "item t-" + it.type);
-      var ico = el("span", "ico k-" + it.type);
-      ico.innerHTML = ICONS[it.type] || "";
+      var li = el("li", "item t-" + it.type + (it.cover ? " has-cover" : ""));
+      var ico;
+      if (it.cover) {
+        ico = document.createElement("img");
+        ico.className = "cover";
+        ico.src = it.cover;
+        ico.alt = "";
+        ico.addEventListener("error", function () { ico.style.opacity = "0.25"; });
+      } else {
+        ico = el("span", "ico k-" + it.type);
+        ico.innerHTML = ICONS[it.type] || "";
+      }
       var body = el("div", "body");
 
       var top = el("div", "top");
@@ -820,6 +1015,7 @@ svg { display: block; }
       body.appendChild(top);
 
       if (it.author) body.appendChild(el("p", "by", "de " + it.author));
+      if (it.type === "serie" && st === "encours") body.appendChild(makeSteps(it));
 
       if (st === "termine" && it.rating) {
         var r = el("div", "rate");
@@ -869,6 +1065,8 @@ svg { display: block; }
         body.appendChild(fin);
       }
 
+      if (coverEditId === it.id) body.appendChild(makeCoverEditor(it));
+
       var row = el("div", "row");
       var dateText = st === "termine" && it.finishedAt
         ? "Terminé le " + dateLabel(it.finishedAt)
@@ -896,6 +1094,14 @@ svg { display: block; }
           });
           actions.appendChild(done);
         }
+        var ph = el("button", "btn small ghost", it.cover ? "Changer la photo" : "Ajouter une photo");
+        ph.type = "button";
+        ph.style.marginRight = "6px";
+        ph.addEventListener("click", function () {
+          coverEditId = coverEditId === it.id ? null : it.id;
+          confirmId = null; finishId = null; drawList();
+        });
+        actions.appendChild(ph);
         var del = el("button", "btn small ghost", "Supprimer");
         del.type = "button";
         del.addEventListener("click", function () { confirmId = it.id; finishId = null; drawList(); });
@@ -946,8 +1152,14 @@ svg { display: block; }
 
   // --- Formulaire
   function syncForm() {
-    $("author-wrap").hidden = $("type").value !== "livre";
+    var type = $("type").value;
+    $("author-wrap").hidden = type !== "livre";
     $("done-fields").hidden = $("status").value !== "termine";
+    $("season-wrap").hidden = !(type === "serie" && $("status").value === "encours");
+    $("cover-search").hidden = type === "video";
+    $("cover-results").textContent = "";
+    $("cover-msg").textContent = "";
+    if (!coverData) setCover(null);
   }
   $("type").addEventListener("change", syncForm);
   $("status").addEventListener("change", syncForm);
@@ -979,6 +1191,11 @@ svg { display: block; }
       status: status,
       createdAt: now
     };
+    if (coverData) entry.cover = coverData;
+    if (type === "serie" && status === "encours") {
+      entry.season = Math.max(1, parseInt($("season").value, 10) || 1);
+      entry.episode = Math.max(1, parseInt($("episode").value, 10) || 1);
+    }
     if (status === "termine") {
       entry.rating = rating;
       entry.review = $("review").value.trim();
@@ -988,6 +1205,7 @@ svg { display: block; }
     function reset() {
       $("title").value = ""; $("author").value = ""; $("review").value = "";
       rating = 0; drawFormStars();
+      setCover(null); $("season").value = "1"; $("episode").value = "1";
       closeAdd();
       statusFilter = "all"; filter = "all"; query = ""; $("q").value = "";
       renderAll();
@@ -1003,6 +1221,107 @@ svg { display: block; }
       items.push(entry);
       reset();
     }
+  });
+
+  // --- Couverture
+  var coverData = null;
+  function setCover(url) {
+    coverData = url || null;
+    var prev = $("cover-prev");
+    if (coverData) {
+      prev.textContent = "";
+      prev.style.backgroundImage = 'url("' + coverData.replace(/"/g, "%22") + '")';
+    } else {
+      prev.style.backgroundImage = "";
+      prev.innerHTML = ICONS[$("type").value] || "";
+    }
+    $("cover-clear").hidden = !coverData;
+  }
+  function coverMsg(t) { $("cover-msg").textContent = t; }
+  function loadImage(src, cors) {
+    return new Promise(function (resolve, reject) {
+      var im = new Image();
+      if (cors) im.crossOrigin = "anonymous";
+      im.onload = function () { resolve(im); };
+      im.onerror = function () { reject(new Error("image")); };
+      im.src = src;
+    });
+  }
+  function resizeToDataUrl(im) {
+    var max = 360, w = im.naturalWidth || im.width, h = im.naturalHeight || im.height;
+    var k = Math.min(1, max / Math.max(w, h));
+    var c = document.createElement("canvas");
+    c.width = Math.max(1, Math.round(w * k));
+    c.height = Math.max(1, Math.round(h * k));
+    c.getContext("2d").drawImage(im, 0, 0, c.width, c.height);
+    return c.toDataURL("image/jpeg", 0.8);
+  }
+  function fetchJson(url) {
+    return fetch(url).then(function (r) { if (!r.ok) throw new Error("http"); return r.json(); });
+  }
+  function searchCovers(type, q) {
+    var enc = encodeURIComponent(q);
+    if (type === "livre") {
+      return fetchJson("https://openlibrary.org/search.json?q=" + enc + "&limit=10&fields=title,cover_i").then(function (d) {
+        return (d.docs || []).filter(function (x) { return x.cover_i; }).map(function (x) {
+          return { url: "https://covers.openlibrary.org/b/id/" + x.cover_i + "-M.jpg", label: x.title || "" };
+        });
+      });
+    }
+    var media = type === "film" ? "media=movie&entity=movie"
+      : type === "serie" ? "media=tvShow&entity=tvSeason"
+      : "media=podcast&entity=podcast";
+    return fetchJson("https://itunes.apple.com/search?term=" + enc + "&" + media + "&country=fr&limit=10").then(function (d) {
+      return (d.results || []).filter(function (x) { return x.artworkUrl100; }).map(function (x) {
+        return { url: x.artworkUrl100.replace(/\/\d+x\d+bb\./, "/300x300bb."), label: x.collectionName || x.trackName || "" };
+      });
+    });
+  }
+  function pickResult(r) {
+    coverMsg("Je récupère l'image…");
+    $("cover-results").textContent = "";
+    loadImage(r.url, true)
+      .then(function (im) { setCover(resizeToDataUrl(im)); coverMsg(""); })
+      .catch(function () { setCover(r.url); coverMsg(""); });
+  }
+  $("cover-pick").addEventListener("click", function () { $("cover-file").click(); });
+  $("cover-file").addEventListener("change", function () {
+    var input = this;
+    var f = input.files && input.files[0];
+    if (!f) return;
+    var url = URL.createObjectURL(f);
+    loadImage(url, false)
+      .then(function (im) { setCover(resizeToDataUrl(im)); coverMsg(""); })
+      .catch(function () { coverMsg("Cette photo ne peut pas être lue. Essaie-en une autre."); })
+      .then(function () { URL.revokeObjectURL(url); input.value = ""; });
+  });
+  $("cover-clear").addEventListener("click", function () { setCover(null); });
+  $("cover-search").addEventListener("click", function () {
+    var q = $("title").value.trim();
+    if (!q) { coverMsg("Écris d'abord le titre, puis appuie sur « Chercher la couverture »."); $("title").focus(); return; }
+    var type = $("type").value;
+    coverMsg("Recherche en cours…");
+    $("cover-results").textContent = "";
+    searchCovers(type, q).then(function (list) {
+      var seen = {};
+      list = list.filter(function (r) { if (seen[r.url]) return false; seen[r.url] = 1; return true; });
+      if (!list.length) { coverMsg("Aucune image trouvée. Tu peux choisir une photo de ton téléphone."); return; }
+      coverMsg("Touche l'image qui te plaît.");
+      var box = $("cover-results");
+      list.forEach(function (r) {
+        var b = document.createElement("button");
+        b.type = "button";
+        b.title = r.label;
+        var im = document.createElement("img");
+        im.src = r.url;
+        im.alt = r.label;
+        b.appendChild(im);
+        b.addEventListener("click", function () { pickResult(r); });
+        box.appendChild(b);
+      });
+    }).catch(function () {
+      coverMsg("Impossible de chercher pour le moment (pas de connexion ?). Tu peux choisir une photo de ton téléphone.");
+    });
   });
 
   // --- Enregistrement durable
